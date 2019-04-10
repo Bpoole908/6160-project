@@ -1,0 +1,16 @@
+Atkins|Center City|Denny|Student Health Center|Woodward Hall|Belk Gymnasium
+
+CREATE TABLE `tmp` (
+  `locationName` varchar(255) default NULL,
+  `locationAddress` varchar(255) default NULL
+);
+
+INSERT INTO `tmp` (`locationName`,`locationAddress`) VALUES ("Belk Gymnasium","5799 Donec St."),("Woodward Hall","712-8205 Nam Ave"),("Student Health Center","228-2163 Sagittis Street"),("Center City","Ap #862-6882 Lacus. Road"),("Denny","436-9903 Sit St."),("Atkins","2332 Vivamus Av.");
+
+INSERT INTO Locations (locationName, locationAddress)
+SELECT locationName , locationAddress
+FROM tmp;
+
+SELECT * FROM Locations;
+
+DROP TABLE `tmp`;

@@ -1,0 +1,24 @@
+CREATE TABLE `fac_person` (
+  `email` varchar(255) default NULL,
+  `name` varchar(255) default NULL,
+  `department` varchar(255) default NULL,
+  `phone` varchar(100) default NULL,
+  `fullTime` tinyint default NULL,
+  `title` varchar(255) default NULL
+);
+
+INSERT INTO `fac_person` (`email`,`name`,`department`,`phone`,`fullTime`,`title`) VALUES ("Sed.id.risus@pedeetrisus.ca","Breanna Davis","Computer Science","7407430267",1,"Adjunct"),("vel.quam.dignissim@nonlaciniaat.com","Rhonda Petersen","Chemistry","2805671456",1,"Professor"),("taciti@pretiumneque.com","Luke Dickson","Psychology","5634261020",1,"Lecturer"),("neque.Nullam@egetvariusultrices.net","Samuel Wynn","Psychology","3016005547",0,"Lecturer"),("pede.blandit.congue@accumsannequeet.net","Nero Jarvis","Computer Science","5578653907",0,"Adjunct"),("magnis.dis@gravida.com","Demetrius Compton","Psychology","7092567227",0,"Lecturer"),("et.magnis@ipsumdolor.edu","Wynne Ramsey","Biology","4206275463",0,"Lecturer"),("Sed.et@ligula.co.uk","Zephania Trevino","Mathematics","5489172602",1,"Lecturer"),("nascetur@metus.edu","Alexander Vang","Chemistry","9541267552",0,"Adjunct"),("velit.egestas@orci.ca","Christine Sharp","Chemistry","6982463167",1,"Lecturer"),("tempor.lorem.eget@scelerisque.net","Mira Harper","Psychology","6002383424",1,"Adjunct"),("at.pede.Cras@placerat.com","Cassidy Duke","Computer Science","9375252753",0,"Professor"),("eleifend.nec@quam.co.uk","Pearl Lindsey","Business","6876988460",0,"Professor"),("Integer.vulputate.risus@sodalesnisimagna.ca","Scott Tanner","Biology","2634354933",1,"Professor"),("faucibus@Suspendisse.ca","Fay Mcguire","Computer Science","6318502011",1,"Professor"),("tellus.id.nunc@ipsum.net","Jade Burt","Business","7116335276",1,"Professor"),("Aliquam.rutrum@libero.com","Jakeem Nichols","Biology","5209162410",1,"Adjunct"),("dapibus.ligula@Vivamusmolestiedapibus.ca","Kellie Tanner","Chemistry","8725153572",0,"Professor"),("Donec@turpisAliquamadipiscing.edu","Seth Hughes","Biology","2206511980",0,"Adjunct"),("Mauris.quis@semutcursus.com","Kimberley Craft","Psychology","2361236378",0,"Lecturer");
+
+INSERT INTO Persons (email, name, department, phone)
+SELECT email, name, department, phone
+FROM fac_person as fp;
+
+INSERT INTO faculty (email, fullTime, title)
+SELECT email, fullTime, title
+FROM fac_person;
+
+SELECT * FROM persons as p
+JOIN faculty as f
+WHERE p.email = f.email;
+
+DROP TABLE `fac_person`;

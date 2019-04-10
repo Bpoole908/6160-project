@@ -1,0 +1,28 @@
+1/01/19854 - 01/01/2000
+2019-2025
+
+
+CREATE TABLE `tmp` (
+  `email` varchar(255) default NULL,
+  `name` varchar(255) default NULL,
+  `department` varchar(255) default NULL,
+  `phone` varchar(100) default NULL,
+  `gradYear` int(4) default NULL,
+  `birthdate` DATE
+);
+
+INSERT INTO `tmp` (`email`,`name`,`department`,`phone`,`gradYear`,`birthdate`) VALUES ("ut@egetmassaSuspendisse.org","Raymond Cobb","Chemistry","9654193242",2024,"1985-06-24"),("amet.ante@Phasellus.ca","Noel Herring","Business","5167768047",2022,"1996-08-06"),("netus.et.malesuada@feugiat.com","Chava Walker","Business","4546935675",2023,"1993-12-06"),("nunc.nulla@eleifend.org","Lee Pace","Computer Science","9474247176",2025,"1988-08-21"),("a.arcu@malesuadaid.com","Warren Sykes","Chemistry","1247287555",2025,"1988-03-09"),("ac.ipsum.Phasellus@eueleifend.co.uk","Tara Edwards","Psychology","4531287673",2022,"1987-12-15"),("feugiat@ac.ca","Price Nguyen","Biology","9167812823",2020,"1986-06-26"),("justo.Praesent.luctus@Phasellusinfelis.com","Bianca Bradley","Biology","8249371252",2019,"1989-05-22"),("lacus.Mauris@Duismienim.org","Declan Holmes","Business","8906606478",2021,"1985-10-01"),("rutrum.magna.Cras@consequatdolor.com","Jessica Drake","Biology","6304066569",2019,"1997-03-02"),("cursus.in.hendrerit@anteiaculis.org","Phelan Owens","Computer Science","4669424089",2021,"1997-03-28"),("Quisque@montesnasceturridiculus.com","Alexander Shields","Computer Science","6323618351",2021,"1992-03-20"),("et@diamSed.com","Jescie Yates","Mathematics","5793987050",2024,"1998-11-14"),("egestas.Aliquam.fringilla@orciUt.net","Bell Swanson","Computer Science","8203405875",2021,"1994-06-14"),("Aenean@Sednecmetus.com","Rigel Hogan","Biology","1976990702",2019,"1998-10-02"),("tristique.pharetra@morbitristiquesenectus.edu","Bertha Huff","Mathematics","8462678664",2021,"1987-04-09"),("nisi.Cum.sociis@ligulaAenean.co.uk","Cameran Bean","Biology","2269807888",2019,"1999-07-11"),("cursus.non@duiaugueeu.org","Myles Jarvis","Biology","9754694986",2023,"1991-08-26"),("dolor.tempus.non@justo.co.uk","Germane Vincent","Psychology","1616389385",2023,"1997-01-03"),("nec.mollis@PhasellusnullaInteger.org","Irene Mays","Mathematics","8774872533",2021,"1997-01-18");
+
+INSERT INTO Persons (email, name, department, phone)
+SELECT email, name, department, phone
+FROM tmp;
+
+INSERT INTO students (email, gradYear, birthdate)
+SELECT email, gradYear, birthdate
+FROM tmp;
+
+SELECT * FROM persons as p
+JOIN students as f
+WHERE p.email = f.email;
+
+DROP TABLE `tmp`;

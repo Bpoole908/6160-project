@@ -1,0 +1,17 @@
+Yamaha|Honda
+V1|V2
+
+CREATE TABLE `tmp` (
+  `make` varchar(45) default NULL,
+  `model` varchar(45) default NULL
+);
+
+INSERT INTO `tmp` (`make`,`model`) VALUES ("Yamaha","V1"),("Honda","V2");
+
+INSERT INTO Cart_Models (make, model)
+SELECT make, model
+FROM tmp;
+
+SELECT * FROM cart_models;
+
+DROP TABLE `tmp`;

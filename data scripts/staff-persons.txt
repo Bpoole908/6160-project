@@ -1,0 +1,28 @@
+Tech Support|Human Resources|Student Affairs
+Employee|Manager
+
+
+CREATE TABLE `tmp` (
+  `email` varchar(255) default NULL,
+  `name` varchar(255) default NULL,
+  `department` varchar(255) default NULL,
+  `phone` varchar(100) default NULL,
+  `position` varchar(128) default NULL,
+  `admin` tinyint default NULL
+);
+
+INSERT INTO `tmp` (`email`,`name`,`department`,`phone`,`position`,`admin`) VALUES ("elit.pretium.et@sitametdapibus.edu","Keith Luna","Student Affairs","6822547596","Employee",0),("viverra.Donec@atauctor.ca","Julie Stanley","Human Resources","8201833217","Employee",1),("nec@consectetuercursuset.com","Robert Mcgee","Tech Support","8737834727","Employee",1),("sapien.gravida@Nuncsed.org","Blaze Molina","Human Resources","1616387379","Manager",1),("Vivamus.nisi@vitaealiquam.co.uk","Phoebe Boyd","Tech Support","2131687696","Manager",1),("nisi.magna@tristique.co.uk","TaShya Kaufman","Tech Support","6604388129","Manager",1),("in.faucibus.orci@Loremipsumdolor.edu","Shoshana Cash","Tech Support","7477084069","Employee",0),("rutrum.Fusce@intempuseu.ca","Iris Clemons","Student Affairs","7035823812","Manager",1),("tellus@nequevitaesemper.edu","Devin Ball","Tech Support","3734766566","Employee",1),("Nunc.commodo.auctor@faucibus.co.uk","Mari Daniel","Human Resources","9041950050","Manager",1),("Nullam.scelerisque@ametornarelectus.net","Karyn Oneal","Human Resources","8351580424","Manager",0),("purus.sapien@pedeblandit.ca","Nathaniel Murphy","Student Affairs","4082438550","Employee",0),("pede.Cum@morbitristiquesenectus.edu","Akeem Faulkner","Human Resources","8743093629","Manager",0),("ac.orci.Ut@mauris.net","Amir Nichols","Tech Support","8337804998","Manager",0),("aliquet.libero@loremutaliquam.ca","Jackson Irwin","Student Affairs","2561619877","Manager",0),("libero@sedpedeCum.edu","Erin Price","Human Resources","4333882482","Employee",0),("ut.odio.vel@aliquetlibero.ca","Ezra Dudley","Student Affairs","2807905764","Employee",0),("tristique@velit.edu","Ivy Reeves","Human Resources","3771161963","Employee",1),("Morbi.quis@Quisque.com","Florence Saunders","Human Resources","2205425796","Employee",0),("mauris.Suspendisse@justonec.ca","Scott Foreman","Human Resources","5964457164","Employee",1);
+
+INSERT INTO Persons (email, name, department, phone)
+SELECT email, name, department, phone
+FROM tmp;
+
+INSERT INTO staff (email, position, admin)
+SELECT email, position, admin
+FROM tmp;
+
+SELECT * FROM persons as p
+JOIN staff as f
+WHERE p.email = f.email;
+
+DROP TABLE `tmp`;
