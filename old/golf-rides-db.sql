@@ -1,15 +1,15 @@
 CREATE DATABASE  IF NOT EXISTS `fortyniner golf cart rides` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `fortyniner golf cart rides`;
--- MySQL dump 10.13  Distrib 5.7.25, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.14, for Win64 (x86_64)
 --
--- Host: localhost    Database: fortyniner golf cart rides
+-- Host: 127.0.0.1    Database: fortyniner golf cart rides
 -- ------------------------------------------------------
--- Server version	5.7.25
+-- Server version	8.0.14
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+ SET NAMES utf8 ;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -23,7 +23,7 @@ USE `fortyniner golf cart rides`;
 
 DROP TABLE IF EXISTS `cart_models`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `cart_models` (
   `idCart_Model` int(11) NOT NULL AUTO_INCREMENT,
   `make` varchar(45) NOT NULL,
@@ -48,15 +48,15 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `carts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `carts` (
   `idCart` int(11) NOT NULL AUTO_INCREMENT,
   `idModel` int(11) NOT NULL,
   `numSeats` int(11) NOT NULL,
   `extraSeats` int(11) NOT NULL,
   PRIMARY KEY (`idCart`),
-  KEY `fk_carts_Cart_Model1_idx` (`idModel`),
-  CONSTRAINT `fk_carts_Cart_Model1` FOREIGN KEY (`idModel`) REFERENCES `cart_models` (`idCart_Model`)
+  KEY `fk_Carts_Cart_Model1_idx` (`idModel`),
+  CONSTRAINT `fk_Carts_Cart_Model1` FOREIGN KEY (`idModel`) REFERENCES `cart_models` (`idCart_Model`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -76,16 +76,16 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `drivers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `drivers` (
   `email` varchar(255) NOT NULL COMMENT 'Specialization',
-  `carts_idCart` int(11) NOT NULL,
+  `Carts_idCart` int(11) NOT NULL,
   `liscensNumber` varchar(12) NOT NULL,
   `dateHired` date NOT NULL,
   PRIMARY KEY (`email`),
-  KEY `fk_drivers_carts1_idx` (`carts_idCart`),
-  CONSTRAINT `fk_drivers_carts1` FOREIGN KEY (`carts_idCart`) REFERENCES `carts` (`idCart`),
-  CONSTRAINT `fk_drivers_persons1` FOREIGN KEY (`email`) REFERENCES `persons` (`email`)
+  KEY `fk_Drivers_Carts1_idx` (`Carts_idCart`),
+  CONSTRAINT `fk_Drivers_Carts1` FOREIGN KEY (`Carts_idCart`) REFERENCES `carts` (`idCart`),
+  CONSTRAINT `fk_Drivers_Persons1` FOREIGN KEY (`email`) REFERENCES `persons` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -105,13 +105,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `faculty`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `faculty` (
   `email` varchar(256) NOT NULL COMMENT 'Specialization',
   `fullTime` tinyint(4) NOT NULL,
   `title` varchar(128) NOT NULL,
   PRIMARY KEY (`email`),
-  CONSTRAINT `fk_faculty_persons1` FOREIGN KEY (`email`) REFERENCES `persons` (`email`)
+  CONSTRAINT `fk_Faculty_Persons1` FOREIGN KEY (`email`) REFERENCES `persons` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -131,7 +131,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `locations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `locations` (
   `idLocation` int(11) NOT NULL AUTO_INCREMENT,
   `locationName` varchar(255) NOT NULL,
@@ -156,7 +156,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `persons`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `persons` (
   `email` varchar(255) NOT NULL COMMENT 'Parent in specialization which is disjointed.',
   `name` varchar(255) NOT NULL,
@@ -182,25 +182,25 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `ride`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `ride` (
-  `idride` int(11) NOT NULL AUTO_INCREMENT,
+  `idRide` int(11) NOT NULL AUTO_INCREMENT,
   `emailCustomer` varchar(255) NOT NULL,
   `emailDriver` varchar(255) NOT NULL,
-  `idlocationstart` int(11) NOT NULL,
+  `idLocationStart` int(11) NOT NULL,
   `idLocationEnd` int(11) NOT NULL,
   `date` date NOT NULL,
   `time` time NOT NULL,
   `numberPeople` int(11) NOT NULL,
-  PRIMARY KEY (`idride`),
-  KEY `fk_Schedule ride_drivers1_idx` (`emailDriver`),
-  KEY `fk_Schedule ride_Location1_idx` (`idlocationstart`),
-  KEY `fk_Schedule ride_Location2_idx` (`idLocationEnd`),
-  KEY `fk_Schedule ride_persons1_idx` (`emailCustomer`),
-  CONSTRAINT `fk_Schedule ride_Location1` FOREIGN KEY (`idlocationstart`) REFERENCES `locations` (`idLocation`),
-  CONSTRAINT `fk_Schedule ride_Location2` FOREIGN KEY (`idLocationEnd`) REFERENCES `locations` (`idLocation`),
-  CONSTRAINT `fk_Schedule ride_drivers1` FOREIGN KEY (`emailDriver`) REFERENCES `drivers` (`email`),
-  CONSTRAINT `fk_Schedule ride_persons1` FOREIGN KEY (`emailCustomer`) REFERENCES `persons` (`email`)
+  PRIMARY KEY (`idRide`),
+  KEY `fk_Schedule Ride_Drivers1_idx` (`emailDriver`),
+  KEY `fk_Schedule Ride_Location1_idx` (`idLocationStart`),
+  KEY `fk_Schedule Ride_Location2_idx` (`idLocationEnd`),
+  KEY `fk_Schedule Ride_Persons1_idx` (`emailCustomer`),
+  CONSTRAINT `fk_Schedule Ride_Drivers1` FOREIGN KEY (`emailDriver`) REFERENCES `drivers` (`email`),
+  CONSTRAINT `fk_Schedule Ride_Location1` FOREIGN KEY (`idLocationStart`) REFERENCES `locations` (`idLocation`),
+  CONSTRAINT `fk_Schedule Ride_Location2` FOREIGN KEY (`idLocationEnd`) REFERENCES `locations` (`idLocation`),
+  CONSTRAINT `fk_Schedule Ride_Persons1` FOREIGN KEY (`emailCustomer`) REFERENCES `persons` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -220,13 +220,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `staff`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `staff` (
   `email` varchar(256) NOT NULL COMMENT 'Specialization',
   `position` varchar(128) NOT NULL,
   `admin` tinyint(4) NOT NULL,
   PRIMARY KEY (`email`),
-  CONSTRAINT `fk_staff_persons1` FOREIGN KEY (`email`) REFERENCES `persons` (`email`)
+  CONSTRAINT `fk_Staff_Persons1` FOREIGN KEY (`email`) REFERENCES `persons` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -246,13 +246,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `students`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `students` (
   `email` varchar(256) NOT NULL COMMENT 'Specialization',
   `gradYear` int(4) NOT NULL,
   `birthdate` date NOT NULL,
   PRIMARY KEY (`email`),
-  CONSTRAINT `fk_students_persons1` FOREIGN KEY (`email`) REFERENCES `persons` (`email`)
+  CONSTRAINT `fk_Students_Persons1` FOREIGN KEY (`email`) REFERENCES `persons` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -265,14 +265,6 @@ LOCK TABLES `students` WRITE;
 INSERT INTO `students` VALUES ('a.arcu@malesuadaid.com',2025,'1988-03-09'),('ac.ipsum.Phasellus@eueleifend.co.uk',2022,'1987-12-15'),('Aenean@Sednecmetus.com',2019,'1998-10-02'),('amet.ante@Phasellus.ca',2022,'1996-08-06'),('cursus.in.hendrerit@anteiaculis.org',2021,'1997-03-28'),('cursus.non@duiaugueeu.org',2023,'1991-08-26'),('dolor.tempus.non@justo.co.uk',2023,'1997-01-03'),('egestas.Aliquam.fringilla@orciUt.net',2021,'1994-06-14'),('et@diamSed.com',2024,'1998-11-14'),('feugiat@ac.ca',2020,'1986-06-26'),('justo.Praesent.luctus@Phasellusinfelis.com',2019,'1989-05-22'),('lacus.Mauris@Duismienim.org',2021,'1985-10-01'),('nec.mollis@PhasellusnullaInteger.org',2021,'1997-01-18'),('netus.et.malesuada@feugiat.com',2023,'1993-12-06'),('nisi.Cum.sociis@ligulaAenean.co.uk',2019,'1999-07-11'),('nunc.nulla@eleifend.org',2025,'1988-08-21'),('Quisque@montesnasceturridiculus.com',2021,'1992-03-20'),('rutrum.magna.Cras@consequatdolor.com',2019,'1997-03-02'),('tristique.pharetra@morbitristiquesenectus.edu',2021,'1987-04-09'),('ugt@egetmassaSuspendisse.org',2024,'1985-06-24');
 /*!40000 ALTER TABLE `students` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'fortyniner golf cart rides'
---
-
---
--- Dumping routines for database 'fortyniner golf cart rides'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -283,4 +275,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-16 15:10:27
+-- Dump completed on 2019-04-10 11:04:58
