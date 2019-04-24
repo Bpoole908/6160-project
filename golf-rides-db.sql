@@ -1,15 +1,15 @@
 CREATE DATABASE  IF NOT EXISTS `fortyniner golf cart rides` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `fortyniner golf cart rides`;
--- MySQL dump 10.13  Distrib 5.7.25, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.14, for Win64 (x86_64)
 --
--- Host: localhost    Database: fortyniner golf cart rides
+-- Host: 127.0.0.1    Database: fortyniner golf cart rides
 -- ------------------------------------------------------
--- Server version	5.7.25
+-- Server version	8.0.14
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+ SET NAMES utf8 ;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -23,7 +23,7 @@ USE `fortyniner golf cart rides`;
 
 DROP TABLE IF EXISTS `cart_models`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `cart_models` (
   `idCart_Model` int(11) NOT NULL AUTO_INCREMENT,
   `make` varchar(45) NOT NULL,
@@ -48,7 +48,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `carts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `carts` (
   `idCart` int(11) NOT NULL AUTO_INCREMENT,
   `idModel` int(11) NOT NULL,
@@ -71,12 +71,40 @@ INSERT INTO `carts` VALUES (1,1,3,2),(2,1,3,2),(3,1,2,1),(4,1,2,1),(5,2,3,2),(6,
 UNLOCK TABLES;
 
 --
+-- Temporary view structure for view `commonendinglocations`
+--
+
+DROP TABLE IF EXISTS `commonendinglocations`;
+/*!50001 DROP VIEW IF EXISTS `commonendinglocations`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8mb4;
+/*!50001 CREATE VIEW `commonendinglocations` AS SELECT 
+ 1 AS `idLocationEnd`,
+ 1 AS `locationName`,
+ 1 AS `total`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `commonstartinglocations`
+--
+
+DROP TABLE IF EXISTS `commonstartinglocations`;
+/*!50001 DROP VIEW IF EXISTS `commonstartinglocations`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8mb4;
+/*!50001 CREATE VIEW `commonstartinglocations` AS SELECT 
+ 1 AS `idlocationstart`,
+ 1 AS `locationName`,
+ 1 AS `total`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `drivers`
 --
 
 DROP TABLE IF EXISTS `drivers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `drivers` (
   `email` varchar(255) NOT NULL COMMENT 'Specialization',
   `carts_idCart` int(11) NOT NULL,
@@ -105,7 +133,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `faculty`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `faculty` (
   `email` varchar(256) NOT NULL COMMENT 'Specialization',
   `fullTime` tinyint(4) NOT NULL,
@@ -131,12 +159,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `locations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `locations` (
   `idLocation` int(11) NOT NULL AUTO_INCREMENT,
   `locationName` varchar(255) NOT NULL,
   `locationAddress` varchar(255) NOT NULL,
-  PRIMARY KEY (`idLocation`)
+  PRIMARY KEY (`idLocation`),
+  KEY `locationsNameIndex` (`locationName`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -156,7 +185,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `persons`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `persons` (
   `email` varchar(255) NOT NULL COMMENT 'Parent in specialization which is disjointed.',
   `name` varchar(255) NOT NULL,
@@ -182,7 +211,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `ride`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `ride` (
   `idride` int(11) NOT NULL AUTO_INCREMENT,
   `emailCustomer` varchar(255) NOT NULL,
@@ -197,11 +226,12 @@ CREATE TABLE `ride` (
   KEY `fk_Schedule ride_Location1_idx` (`idlocationstart`),
   KEY `fk_Schedule ride_Location2_idx` (`idLocationEnd`),
   KEY `fk_Schedule ride_persons1_idx` (`emailCustomer`),
+  KEY `locationsIdIndex` (`idlocationstart`,`idLocationEnd`),
   CONSTRAINT `fk_Schedule ride_Location1` FOREIGN KEY (`idlocationstart`) REFERENCES `locations` (`idLocation`),
   CONSTRAINT `fk_Schedule ride_Location2` FOREIGN KEY (`idLocationEnd`) REFERENCES `locations` (`idLocation`),
   CONSTRAINT `fk_Schedule ride_drivers1` FOREIGN KEY (`emailDriver`) REFERENCES `drivers` (`email`),
   CONSTRAINT `fk_Schedule ride_persons1` FOREIGN KEY (`emailCustomer`) REFERENCES `persons` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -213,6 +243,35 @@ LOCK TABLES `ride` WRITE;
 INSERT INTO `ride` VALUES (1,'cursus.non@duiaugueeu.org','libero@adipiscingfringillaporttitor.co.uk',2,3,'2019-01-08','17:37:44',2),(2,'cursus.in.hendrerit@anteiaculis.org ','hymenaeos.Mauris@vitaesodalesat.edu ',2,5,'2019-01-15','10:36:19',1),(3,'aliquet.libero@loremutaliquam.ca ','ipsum.non.arcu@nisinibh.com ',4,5,'2019-02-08','17:05:36',1),(4,'ac.ipsum.Phasellus@eueleifend.co.uk','erat@euaccumsansed.net ',6,3,'2019-01-27','17:18:09',1),(5,'cursus.in.hendrerit@anteiaculis.org ','lacinia.at.iaculis@euismodac.com ',4,5,'2019-05-04','11:36:19',1),(6,'amet.ante@Phasellus.ca ','Donec.est.Nunc@primisinfaucibus.co.uk ',2,4,'2019-02-15','05:24:00',1),(7,'ac.ipsum.Phasellus@eueleifend.co.uk','Donec.est@tellusAenean.org ',6,5,'2019-03-08','23:10:49',1),(8,'amet.ante@Phasellus.ca ','Donec.est@tellusAenean.org ',6,1,'2019-05-13','23:10:33',1),(9,'Aliquam.rutrum@libero.com ','ipsum.non.arcu@nisinibh.com ',1,3,'2019-03-02','05:12:31',1),(10,'aliquet.libero@loremutaliquam.ca ','ipsum.non.arcu@nisinibh.com ',1,2,'2019-03-19','01:57:13',2);
 /*!40000 ALTER TABLE `ride` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `ride_BEFORE_INSERT` BEFORE INSERT ON `ride` FOR EACH ROW BEGIN
+	declare msg varchar(255);
+	declare email varchar(255);
+	if new.numberPeople > 2 then 
+		signal sqlstate '20000' set message_text = 'ValueError: Number of people exceeds allowable';
+	end if;
+
+	set email = (select distinct(driverSeat.email)
+	from (SELECT drivers.email, carts.extraSeats FROM carts JOIN drivers 
+	WHERE carts.idCart=drivers.carts_idCart) as driverSeat, persons
+	WHERE driverSeat.extraSeats >= new.numberPeople
+	GROUP BY driverSeat.email
+	ORDER BY RAND() Limit 1);
+    set new.emailDriver = email;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `staff`
@@ -220,7 +279,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `staff`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `staff` (
   `email` varchar(256) NOT NULL COMMENT 'Specialization',
   `position` varchar(128) NOT NULL,
@@ -246,7 +305,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `students`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `students` (
   `email` varchar(256) NOT NULL COMMENT 'Specialization',
   `gradYear` int(4) NOT NULL,
@@ -273,6 +332,82 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'fortyniner golf cart rides'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `commonEndingLocationsProcedure` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `commonEndingLocationsProcedure`()
+BEGIN
+	SELECT locationName, total
+    FROM commonStartingLocations;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `commonStartingLocationsProcedure` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `commonStartingLocationsProcedure`()
+BEGIN
+	SELECT locationName, total
+    FROM commonStartingLocations;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Final view structure for view `commonendinglocations`
+--
+
+/*!50001 DROP VIEW IF EXISTS `commonendinglocations`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `commonendinglocations` AS select `endfrequent`.`idLocationEnd` AS `idLocationEnd`,`endfrequent`.`locationName` AS `locationName`,count(0) AS `total` from (select `ride`.`idride` AS `idride`,`ride`.`emailCustomer` AS `emailCustomer`,`ride`.`emailDriver` AS `emailDriver`,`ride`.`idlocationstart` AS `idlocationstart`,`ride`.`idLocationEnd` AS `idLocationEnd`,`ride`.`date` AS `date`,`ride`.`time` AS `time`,`ride`.`numberPeople` AS `numberPeople`,`locations`.`idLocation` AS `idLocation`,`locations`.`locationName` AS `locationName`,`locations`.`locationAddress` AS `locationAddress` from (`ride` join `locations`)) `endfrequent` where (`endfrequent`.`idLocationEnd` = `endfrequent`.`idLocation`) group by `endfrequent`.`idLocationEnd` order by count(0) desc */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `commonstartinglocations`
+--
+
+/*!50001 DROP VIEW IF EXISTS `commonstartinglocations`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `commonstartinglocations` AS select `startfrequent`.`idlocationstart` AS `idlocationstart`,`startfrequent`.`locationName` AS `locationName`,count(0) AS `total` from (select `ride`.`idride` AS `idride`,`ride`.`emailCustomer` AS `emailCustomer`,`ride`.`emailDriver` AS `emailDriver`,`ride`.`idlocationstart` AS `idlocationstart`,`ride`.`idLocationEnd` AS `idLocationEnd`,`ride`.`date` AS `date`,`ride`.`time` AS `time`,`ride`.`numberPeople` AS `numberPeople`,`locations`.`idLocation` AS `idLocation`,`locations`.`locationName` AS `locationName`,`locations`.`locationAddress` AS `locationAddress` from (`ride` join `locations`)) `startfrequent` where (`startfrequent`.`idlocationstart` = `startfrequent`.`idLocation`) group by `startfrequent`.`idlocationstart` order by count(0) desc */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -283,4 +418,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-16 15:10:27
+-- Dump completed on 2019-04-24  8:39:56
